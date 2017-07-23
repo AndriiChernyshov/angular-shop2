@@ -1,0 +1,19 @@
+<h3>Our Products</h3>
+<nav>
+  <ul class="nav nav-tabs">
+    
+    <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a routerLink="./food" queryParamsHandling="preserve" preserveFragment>Food</a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="./beverage" queryParamsHandling="preserve" preserveFragment>Beverage</a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="./misc" queryParamsHandling="preserve" preserveFragment>Misc</a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="./cart" queryParamsHandling="preserve" preserveFragment>Cart</a>
+    </li>
+  </ul>
+</nav>
+<router-outlet></router-outlet>

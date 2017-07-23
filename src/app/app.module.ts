@@ -1,18 +1,29 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { Router } from '@angular/router';
+
+
+import { AppRoutingModule, appRouterComponents } from './app.routing.module';
 
 import { AppComponent } from './app.component';
-import { AboutComponent } from './components/about/about.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    AboutComponent
+    appRouterComponents
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+   
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(router: Router){
+    console.log('Routes: ', JSON.stringify(router.config, undefined,2));
+  }
+}
