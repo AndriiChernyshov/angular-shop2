@@ -1,17 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AdminComponent, AdminProductListComponent } from '.';
+import { AdminComponent, AdminProductListComponent, AdminProductEditComponent } from '.';
 
 
 const routes: Routes = [
     {
         path: '',
         component: AdminComponent,
+    },
+    {
+        path: 'product-edit/:id',
+        component: AdminProductEditComponent
     }
 ];
 
-export let mainRouterComponents = [ AdminComponent, AdminProductListComponent ];
+export let mainRouterComponents = [ AdminComponent, AdminProductListComponent, AdminProductEditComponent ];
 
 @NgModule({
     imports: [

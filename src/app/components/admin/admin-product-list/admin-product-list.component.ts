@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CurrencyPipe } from '@angular/common';
+
+import { Product } from '../../../models/product.model';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-admin-product-list',
@@ -7,9 +12,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminProductListComponent implements OnInit {
 
-  constructor() { }
+  public products: Product[];
+
+  constructor(
+    private router: Router,
+    private productService: ProductService
+  ) 
+  {
+    this.products = productService.getAllProducts();
+  }
 
   ngOnInit() {
   }
 
+  public editProduct(product: Product): void{
+    const link = ['/admin/product-edit', product.id];
+    this.router.navigate(link);
+  }
 }

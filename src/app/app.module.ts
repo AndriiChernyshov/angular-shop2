@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { AppRoutingModule, appRouterComponents } from './app.routing.module';
 
 import { AppComponent } from './app.component';
-
+import { ProductService } from './services/product.service';
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import { AppComponent } from './app.component';
    
     AppRoutingModule
   ],
-  providers: [],
+  providers: [ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

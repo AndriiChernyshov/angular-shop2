@@ -1,3 +1,16 @@
 <p>
   admin-product-list works!
 </p>
+<div class="panel panel-default" *ngFor="let product of products">
+	<div class="panel-heading">Product</div>
+	<div class="panel-body">
+		<ul>
+			<li>Name: {{product.name}}</li>
+			<li>Price: {{product.price | currency:'UAH':false:'1.2-4'}}</li>
+		</ul>
+		<button class="btn btn-warning btn-sm"
+			(click)="editProduct(product)">
+			Edit
+		</button>
+	</div>
+</div>
