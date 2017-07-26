@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminComponent, AdminProductListComponent, AdminProductEditComponent } from '.';
 
+import { ProductResolveGuard } from '../../guards/product-resolve.guard';
 
 const routes: Routes = [
     {
@@ -11,8 +12,19 @@ const routes: Routes = [
     },
     {
         path: 'product-edit/:id',
-        component: AdminProductEditComponent
+        component: AdminProductEditComponent,
+        resolve: {
+            product: ProductResolveGuard
+        }
+    },
+    {
+        path: 'product-add',
+        component: AdminProductEditComponent,
+        resolve: {
+            product: ProductResolveGuard
+        }
     }
+
 ];
 
 export let mainRouterComponents = [ AdminComponent, AdminProductListComponent, AdminProductEditComponent ];
@@ -21,6 +33,7 @@ export let mainRouterComponents = [ AdminComponent, AdminProductListComponent, A
     imports: [
         RouterModule.forChild(routes)
     ],
+    providers: [ProductResolveGuard],
     exports: [RouterModule]
 })
 export class AdminRoutingModule{

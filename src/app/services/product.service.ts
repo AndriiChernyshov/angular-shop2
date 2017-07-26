@@ -19,11 +19,13 @@ export class ProductService {
         this.products = PRODUCTS;
     }
 
-    public getAllProducts(): Product[]{
-        return this.products;
+    public getAllProducts(): Promise<Product[]>{
+        return Promise.resolve(this.products);
     }
 
-    public findById(id: number): Product{
-        return null;
+    public findById(id: number | string): Promise<Product>{
+        return this.getAllProducts()
+            .then(products => products.find( prd => prd.id === +id))
+            .catch(() => Promise.reject('Error in findById method'));
     }
 }

@@ -19,14 +19,25 @@ export class AdminProductListComponent implements OnInit {
     private productService: ProductService
   ) 
   {
-    this.products = productService.getAllProducts();
+   
   }
 
   ngOnInit() {
+     this.productService.getAllProducts()
+    .then(products => this.products = products)
+    .catch((err) => console.log(err));
   }
 
   public editProduct(product: Product): void{
     const link = ['/admin/product-edit', product.id];
     this.router.navigate(link);
+  }
+
+  public deleteProduct(product: Product): void{
+
+  }
+
+  public addProduct(): void{
+    this.router.navigate(['/admin/product-add']);
   }
 }
