@@ -7,7 +7,10 @@ import { AppRoutingModule, appRouterComponents } from './app.routing.module';
 
 import { AppComponent } from './app.component';
 import { ProductService } from './services/product.service';
+import { ConfirmDialogService } from './services/confirm-dialog.service';
+import { AuthService } from './services/auth.service';
 
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,7 @@ import { ProductService } from './services/product.service';
    
     AppRoutingModule
   ],
-  providers: [ProductService],
+  providers: [AuthGuard, ProductService, ConfirmDialogService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

@@ -28,4 +28,42 @@ export class ProductService {
             .then(products => products.find( prd => prd.id === +id))
             .catch(() => Promise.reject('Error in findById method'));
     }
+
+    public deleteProduct(id: number | string): void{
+       
+        let i = -1;
+        this.products.forEach((item, index) => {
+            if(item.id == id){
+                i = index;
+                return false;
+            }
+        });
+
+        if( i > -1){
+            this.products.splice(i, 1);
+        }
+    }
+
+    public addProduct(product: Product): void{
+       let maxId = 1;
+       
+       if(this.products.length > 0){
+           this.products.forEach((item) => {
+               maxId = item.id > maxId ? item.id : maxId;
+           });
+           maxId+=1;
+       }
+
+       product.id = maxId;
+       this.products.push(product);
+    }
+
+    public updateProduct(product: Product): void{
+        this.findById(product.id).then((prd) => {
+            if(prd){
+                prd.name = product.name;
+                prd.price = product.price;
+            }
+        });
+    }
 }

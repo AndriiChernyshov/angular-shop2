@@ -4,6 +4,7 @@ import { CurrencyPipe } from '@angular/common';
 
 import { Product } from '../../../models/product.model';
 import { ProductService } from '../../../services/product.service';
+import { ConfirmDialogService } from '../../../services/confirm-dialog.service';
 
 @Component({
   selector: 'app-admin-product-list',
@@ -16,7 +17,8 @@ export class AdminProductListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    private confirmDialogService: ConfirmDialogService
   ) 
   {
    
@@ -34,7 +36,11 @@ export class AdminProductListComponent implements OnInit {
   }
 
   public deleteProduct(product: Product): void{
-
+    this.confirmDialogService.confirm("Please confirm that you want to delete " + product.name)
+    .then((val) => {
+      if(val)
+          this.productService.deleteProduct(product.id);
+      })
   }
 
   public addProduct(): void{

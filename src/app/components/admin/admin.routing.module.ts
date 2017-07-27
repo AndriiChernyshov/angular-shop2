@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent, AdminProductListComponent, AdminProductEditComponent } from '.';
 
 import { ProductResolveGuard } from '../../guards/product-resolve.guard';
+import { CanDeactivateGuard } from '../../guards/can-deactivate.guard';
 
 const routes: Routes = [
     {
@@ -15,14 +16,16 @@ const routes: Routes = [
         component: AdminProductEditComponent,
         resolve: {
             product: ProductResolveGuard
-        }
+        },
+        canDeactivate: [CanDeactivateGuard]
     },
     {
         path: 'product-add',
         component: AdminProductEditComponent,
         resolve: {
             product: ProductResolveGuard
-        }
+        },
+        canDeactivate: [CanDeactivateGuard]
     }
 
 ];
@@ -33,7 +36,7 @@ export let mainRouterComponents = [ AdminComponent, AdminProductListComponent, A
     imports: [
         RouterModule.forChild(routes)
     ],
-    providers: [ProductResolveGuard],
+    providers: [ProductResolveGuard, CanDeactivateGuard],
     exports: [RouterModule]
 })
 export class AdminRoutingModule{

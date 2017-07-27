@@ -1,38 +1,31 @@
-<div class="panel panel-default">
+<div class="panel panel-default" class="form-group">
     <div class="panel-heading">
         <h4 class="pannel-title">
-          
+
             {{caption}}
         </h4>
     </div>
     <div class="panel-body">
-        <form (ngSubmit)="saveProduct()" id="edit-product">
-          <div class="form-group">
-            <label for="productName">Name</label>
-            <input type="text" 
-                class="form-control" 
-                id="productName" name="productName"
-                placeholder="Product Name"
-                required
-                [(ngModel)]="selectedProduct.name">
-          </div>
-          <div class="form-group">
-            <label for="productPrice">Price</label>
-            <input type="number" 
-                class="form-control" 
-                id="productPrice" name="productPrice"
-                placeholder="Product Price"
-                [(ngModel)]="selectedProduct.price">
-          </div>
-	  <button 
-            type="submit" 
-            class="btn btn-primary"
-            form="user-form">Save
-        </button>
-        <button class="btn btn-primary"
-            type="button"
-            (click)="goBack()">Back
-        </button>
+        <form id="edit-product" #editProductForm="ngForm" (submit)="saveProduct()">
+            <div class="form-group">
+                <label for="productName">Name</label>
+                <input type="text" class="form-control" id="productName" name="productName" placeholder="Product Name" required minlength="1"
+                    maxlength="128" [(ngModel)]="selectedProduct.name" #productName="ngModel">
+            </div>
+            <div *ngIf="productName.errors && (productName.dirty || productName.touched)" class="alert alert-danger">
+                <div [hidden]="!productName.errors.required">
+                    Name is required
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="productPrice">Price</label>
+                <input type="number" class="form-control" id="productPrice" name="productPrice" required min="0.1" step="1" placeholder="Product Price"
+                    [(ngModel)]="selectedProduct.price">
+            </div>
+            <button type="submit" class="btn btn-default" [disabled]="!editProductForm.form.valid">Save
+                </button>
+            <button class="btn btn-primary" type="button" (click)="goBack()">Back
+                </button>
         </form>
     </div>
 </div>

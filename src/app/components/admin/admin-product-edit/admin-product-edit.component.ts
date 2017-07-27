@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Product } from '../../../models/product.model';
 import { ProductService } from '../../../services/product.service';
+import { ConfirmDialogService } from '../../../services/confirm-dialog.service';
+
 
 @Component({
   selector: 'app-admin-product-edit',
@@ -13,67 +15,68 @@ export class AdminProductEditComponent implements OnInit {
 
   private id: number;
   private selectedProduct: Product;
+  private oldProduct: Product;
   private caption: string;
 
   constructor(
     private productService: ProductService,
+    private confirmDialogService: ConfirmDialogService,
     private route: ActivatedRoute,
     private router: Router
   ) { 
-    /*
-    this.selectedProduct = new Product();
-
+    /* ProductResolve guard lookup for the product.
     this.route.params.subscribe(params => {this.id = params['id'];});
-
-    
-    this.route.data.forEach( (data: {product: Product}) => {
-        this.selectedProduct = Object.assign({}, data.product)
-    }
-    );
-    
-    console.log(this.selectedProduct);
-    console.log(this.id);
     */
   }
 
   ngOnInit() {
-    console.log(this.route.data);
 
     this.selectedProduct = new Product();
     this.route.data.forEach( (data: {product: Product}) => {
-         this.selectedProduct = Object.assign({}, data.product)
+         this.selectedProduct = Object.assign({}, data.product);
+         this.oldProduct = Object.assign({}, data.product);
     });
 
-    console.log(this.selectedProduct);
     if(this.selectedProduct && this.selectedProduct.id > 0)
       this.caption = "Edit Product";
     else
       this.caption = "Add New Product";
     }
-/*
+
   saveProduct() {
     const product = new Product();
-    product.id = this.selectedProduct.id;
+    
+    product.id = this.selectedProduct ? this.selectedProduct.id : undefined;
     product.name = this.selectedProduct.name;
     product.price = this.selectedProduct.price;
       
 
     if (product.id) {
-      this.productService.updateUser(product);
-      // if success
-      this.selectedProduct = product;
-      this.router.navigate(['./../']);
+      this.productService.updateProduct(product);
     } 
     else {
-      this.productService.addUser(product);
-      // if success
-      this.selectedProduct = product;
-      this.router.navigate(['./../']);
+      this.productService.addProduct(product);
     }
+    
+    this.oldProduct = Object.assign({}, product);
+    this.router.navigate(['/admin/']);
   }
-*/
+
   goBack() {
-    this.router.navigate(['./../'], { relativeTo: this.route });
+    this.router.navigate(['/admin/'], { relativeTo: this.route });
   }
+
+  canDeactivate(): Promise<boolean> | boolean {
+    if (this.selectedProduct && this.oldProduct &&
+      this.oldProduct.name != this.selectedProduct.name ||
+      this.oldProduct.price != this.selectedProduct.price
+    ) {
+      if (this.selectedProduct.name || this.selectedProduct.price)
+        return this.confirmDialogService.confirm("You have unsaved changes. Do you want to leave the page?");
+    }
+
+    return true;
+  }
+
 
 }
