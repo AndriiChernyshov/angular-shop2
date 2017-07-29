@@ -1,3 +1,22 @@
-<p>
-  login works!
-</p>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  
+  <div class="form-group">
+    <label>User name:</label>
+    <input formControlName="login" placeholder="user name" required class="form-control"/>
+    <div *ngIf="formError.login" class="alert alert-danger">
+      {{ formError.login}}
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>User email:</label>
+    <input formControlName="email" placeholder="user email" required class="form-control"/>
+    <div *ngIf="formError.email" class="alert alert-danger">
+      {{ formError.email}}
+    </div>
+  </div>
+
+  <input type="submit" (click)="login()" value="Login" [disabled]="!formError.valid" class="btn btn-default"/>
+  <input type="button" (click)="logout()" value="Logout" class="btn btn-default"/>
+
+</form>

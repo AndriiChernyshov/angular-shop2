@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 import { AppRoutingModule, appRouterComponents } from './app.routing.module';
@@ -19,7 +20,8 @@ import { AuthGuard } from './guards/auth.guard';
   ],
   imports: [
     BrowserModule,
-   
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [AuthGuard, ProductService, ConfirmDialogService, AuthService],

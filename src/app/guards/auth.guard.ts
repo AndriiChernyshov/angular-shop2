@@ -7,25 +7,33 @@ import { AuthService } from '../services/auth.service';
 @Injectable()
 export class AuthGuard implements CanActivate, CanLoad {
 
-  constructor(public authService: AuthService){
+  constructor(
+    public router: Router,
+    public authService: AuthService){
 
   }
 
   canActivate(
-    next: ActivatedRouteSnapshot,
+    roote: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    console.log('canActive');
-      return false;
+   
+      console.log('canActive');
+      
+    const url:string = state.url;
+
+    return this.checkLogin(url);
   }
 
   canLoad(route: Route): boolean{
     console.log('canLoad');
-    const url = `/${route.path}`;
-    return this.checkLogin(url);
+    return true;
   }
 
   
   private checkLogin(url: string): boolean {
-    return this.authService.isAdmin();
+    if(this.authService.isAdmin()){
+      return true;
+    }
+    this.router.navigate(['/login']);
   }
 }

@@ -13,6 +13,10 @@ export class AuthService {
     this.activeUser = new LoginUser("abc", "p1");
   }
 
+  getActiveUser(): LoginUser{
+    return this.activeUser ? this.activeUser : new LoginUser('','');
+  }
+
   isAdmin(): boolean{
     console.log(this.activeUser);
     if(this.activeUser)
