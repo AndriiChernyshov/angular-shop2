@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Product } from '../../../models/product.model';
+import { ProductType } from '../../../models/productType.model';
 import { ProductService } from '../../../services/product.service';
 import { ConfirmDialogService } from '../../../services/confirm-dialog.service';
-
+import { EnumExService } from '../../../services/enum-ex.service';
 
 @Component({
   selector: 'app-admin-product-edit',
@@ -78,5 +79,19 @@ export class AdminProductEditComponent implements OnInit {
     return true;
   }
 
+  getProductTypes(){
+    let productTypes: Array<any> = [];
+
+    let productTypeList = EnumExService.getNamesAndValues(ProductType);
+
+    productTypeList.forEach(pair => {
+      let prdType = { 'id': pair.value.toString(), 'name': pair.name };
+      productTypes.push(prdType);
+    })
+
+    return productTypes;
+  }
+
+  
 
 }

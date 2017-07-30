@@ -17,11 +17,15 @@
               </ul>
 
               <ul class="nav navbar-nav navbar-right">
-                <li routerLinkActive="active">
+                <li routerLinkActive="active" *ngIf="this.authService.isAdmin()">
                   <a routerLink="/admin">Admin</a>
                 </li>
                 <li routerLinkActive="active">
-                 <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                 <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span>
+                  <span *ngIf="!this.authService.isLoggedIn()">Log In</span>
+                  <span *ngIf="this.authService.isLoggedIn()">Log Out</span>
+                  
+                  </a>
                 </li>
               </ul>
             

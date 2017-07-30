@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { ProductService } from './services/product.service';
 import { ConfirmDialogService } from './services/confirm-dialog.service';
 import { AuthService } from './services/auth.service';
+import {EnumExService} from './services/enum-ex.service';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -24,7 +25,7 @@ import { AuthGuard } from './guards/auth.guard';
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [AuthGuard, ProductService, ConfirmDialogService, AuthService],
+  providers: [AuthGuard, ProductService, ConfirmDialogService, AuthService, EnumExService],
   bootstrap: [AppComponent]
 })
 export class AppModule { 
